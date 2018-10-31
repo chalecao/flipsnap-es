@@ -1,5 +1,5 @@
 {
-  "name": "flipsnap",
+  "name": "flipsnap-es",
   "description": "Provides UI of snap and slide",
   "version": "1.0.0",
   "main": "./flipsnap.js",
