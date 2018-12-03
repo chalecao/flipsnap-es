@@ -6,3 +6,19 @@
 flipsnap.js is snap scroll for touch device.
 
 http://hokaccha.github.com/js-flipsnap/
+
+# usage
+```
+// install 
+npm install flipsnap-es --save
+
+// code 
+import Flipsnap from 'flipsnap-es'
+let flipsnap = Flipsnap(this.base.querySelector('.flipsnap'), {
+    disableTouch: false
+});
+
+```
+
+# fixed issue
+1. after user finger off the device, then switch next or prev page, cause not smooth

@@ -260,13 +260,14 @@ Flipsnap.prototype.moveToPoint = function (point, transitionDuration) {
     self.animation = true;
   }
   self._setX(- self.currentPoint * self._distance, transitionDuration);
-
-  if (beforePoint !== self.currentPoint) { // is move?
-    // `fsmoveend` is deprecated
-    // `fspointmove` is recommend.
-    self._triggerEvent('fsmoveend', true, false);
-    self._triggerEvent('fspointmove', true, false);
-  }
+  setTimeout(function () {
+    if (beforePoint !== self.currentPoint) { // is move?
+      // `fsmoveend` is deprecated
+      // `fspointmove` is recommend.
+      self._triggerEvent('fsmoveend', true, false);
+      self._triggerEvent('fspointmove', true, false);
+    }
+  }, 50);
 };
 
 Flipsnap.prototype._setX = function (x, transitionDuration) {
@@ -383,9 +384,6 @@ Flipsnap.prototype._touchMove = function (event, type) {
 Flipsnap.prototype._touchEnd = function (event, type) {
   var self = this;
 
-  self.element.removeEventListener(events.move[type], self, false);
-  document.removeEventListener(events.end[type], self, false);
-
   if (!self.scrolling) {
     return;
   }
@@ -407,6 +405,12 @@ Flipsnap.prototype._touchEnd = function (event, type) {
     newPoint = self.currentPoint;
   }
 
+  self.moveToPoint(newPoint);
+
+  self.element.removeEventListener(events.move[type], self, false);
+  document.removeEventListener(events.end[type], self, false);
+
+
   self._touchAfter({
     moved: newPoint !== self.currentPoint,
     originalPoint: self.currentPoint,
@@ -414,7 +418,7 @@ Flipsnap.prototype._touchEnd = function (event, type) {
     cancelled: false
   });
 
-  self.moveToPoint(newPoint);
+
 };
 
 Flipsnap.prototype._click = function (event) {
